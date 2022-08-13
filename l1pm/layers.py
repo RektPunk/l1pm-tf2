@@ -36,4 +36,5 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         inputs: np.ndarray,
     ):
         outputs = tf.matmul(inputs, self.w_cumsum) + self.b
+        outputs = tf.reshape(outputs, [-1, 1])
         return outputs
