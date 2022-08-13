@@ -1,4 +1,3 @@
-#%%
 import numpy as np
 import tensorflow as tf
 
@@ -34,7 +33,7 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         _w_concat = tf.concat([self.b, self.w], axis=0)
         self.w_cumsum = tf.cumsum(_w_concat)[1:]
         self.kernel = self.add_weight(
-            "l1pmkernel",
+            "l1pmregularizer",
             shape=[input_shape[-1] + 1, self.n_taus],
             regularizer=self.kernel_regularizer,
         )
