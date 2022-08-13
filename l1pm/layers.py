@@ -1,3 +1,4 @@
+#%%
 import numpy as np
 import tensorflow as tf
 
@@ -17,10 +18,12 @@ class l1pmOutputDense(tf.keras.layers.Layer):
     def __init__(
         self,
         n_taus: int,
+        kernel_regularizer: tf.keras.regularizers.Regularizer = None,
         **kwargs,
     ):
         super(l1pmOutputDense, self).__init__(**kwargs)
         self.n_taus = n_taus
+        self.kernel_regularizer = kernel_regularizer
 
     def build(
         self,
@@ -30,6 +33,11 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         self.b = tf.Variable(tf.zeros([self.n_taus]), name="b")
         _w_concat = tf.concat([self.b, self.w], axis=0)
         self.w_cumsum = tf.cumsum(_w_concat)[1:]
+        self.kernel = self.add_weight(
+            "l1pmkernel",
+            shape=[input_shape[-1] + 1, self.n_taus],
+            regularizer=self.kernel_regularizer,
+        )
 
     def call(
         self,
