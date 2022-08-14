@@ -29,9 +29,11 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         input_shape,
     ):
         self.w = tf.Variable(tf.random.normal([input_shape[-1], self.n_taus]), name="w")
-        self.b = tf.Variable(tf.zeros([self.n_taus]), name="b")
+        self.b = tf.Variable(tf.zeros([1, self.n_taus]), name="b")
         _w_concat = tf.concat([self.b, self.w], axis=0)
         self.w_cumsum = tf.cumsum(_w_concat)[1:]
+        _w_cumsum_reduce_sum = tf.reduce_sum(tf.maximum(0, -self.w_cumsum), axis=0)
+        self.b_adjusted = tf.maximum(self.b, _w_cumsum_reduce_sum)
         self.kernel = self.add_weight(
             "l1pmregularizer",
             shape=[input_shape[-1] + 1, self.n_taus],
