@@ -21,22 +21,22 @@ class l1pm(tf.keras.Model):
         self,
         out_features: int,
         dense_features: int,
-        n_taus: int, 
+        n_taus: int,
         activation: Callable = tf.nn.sigmoid,
         **kwargs,
     ):
         super(l1pm, self).__init__(**kwargs)
         self.n_taus = n_taus
         self.input_dense = tf.keras.layers.Dense(
-            out_features=out_features,
+            units=out_features,
             activation=activation,
         )
-        self.dense = tf.keras.layes.Dense(
-            dense_features=dense_features,
+        self.dense = tf.keras.layers.Dense(
+            units=dense_features,
             activation=tf.nn.sigmoid,
         )
         self.output_dense = l1pmOutputDense(
-            n_taus= self.n_taus,
+            n_taus=self.n_taus,
         )
 
     def call(
