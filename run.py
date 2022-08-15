@@ -1,6 +1,10 @@
 import tensorflow as tf
 import numpy as np
-from l1pm import generate_example
+from l1pm import (
+    generate_example,
+    DataTransformer,
+    l1pm,
+)
 
 # Examples setting
 EPOCHS = 1000
@@ -12,3 +16,20 @@ DENSE_FEATURES = 10
 
 x_train, y_train = generate_example(N_SAMPLES)
 taus = np.array(TAUS)
+
+data_transformer = DataTransformer(
+    x=x_train,
+    taus=taus,
+    y=y_train,
+)
+
+x_train_transform, y_train_transform, taus_transform = data_transformer()
+
+l1pm_module = l1pm(
+    out_features=OUT_FEATURES,
+    dense_features=DENSE_FEATURES,
+    activation=tf.nn.sigmoid,
+    n_taus=len(taus),
+)
+
+y_hat = l1pm_module(x_train)
