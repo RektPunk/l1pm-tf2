@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 
-class l1pmOutputDense(tf.keras.layers.Layer):
+class L1pmOutputDense(tf.keras.layers.Layer):
     """
     Mcqrnn Output dense network
     *Note that the activation of the last hidden layer must be sigmoid.
@@ -20,7 +20,7 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         kernel_regularizer: tf.keras.regularizers.Regularizer = None,
         **kwargs,
     ):
-        super(l1pmOutputDense, self).__init__(**kwargs)
+        super(L1pmOutputDense, self).__init__(**kwargs)
         self.n_taus = n_taus
         self.kernel_regularizer = kernel_regularizer
 
@@ -31,7 +31,7 @@ class l1pmOutputDense(tf.keras.layers.Layer):
         self.w = tf.Variable(tf.random.normal([input_shape[-1], self.n_taus]), name="w")
         self.b = tf.Variable(tf.zeros([1, self.n_taus]), name="b")
 
-        self.w_cumsum = tf.cumsum(self.w, axis = 1)
+        self.w_cumsum = tf.cumsum(self.w, axis=1)
         _w_cumsum_reduce_sum = tf.reduce_sum(tf.maximum(0, -self.w_cumsum), axis=0)
         _b = tf.maximum(self.b, _w_cumsum_reduce_sum)
         _b_adjusted = tf.concat([self.b[0, :1], _b[0, 1:]], axis=0)

@@ -1,12 +1,12 @@
 from typing import Callable
 import numpy as np
 import tensorflow as tf
-from l1pm.layers import l1pmOutputDense
+from l1pm.layers import L1pmOutputDense
 
 
-class l1pm(tf.keras.Model):
+class L1pm(tf.keras.Model):
     """
-    l1pm simple structure
+    L1pm simple structure
     Note that the middle of dense network can be modified
     Args:
         out_features (int): the number of nodes in first hidden layer
@@ -25,7 +25,7 @@ class l1pm(tf.keras.Model):
         activation: Callable = tf.nn.sigmoid,
         **kwargs,
     ):
-        super(l1pm, self).__init__(**kwargs)
+        super(L1pm, self).__init__(**kwargs)
         self.n_taus = n_taus
         self.input_dense = tf.keras.layers.Dense(
             units=out_features,
@@ -35,7 +35,7 @@ class l1pm(tf.keras.Model):
             units=dense_features,
             activation=tf.nn.sigmoid,
         )
-        self.output_dense = l1pmOutputDense(
+        self.output_dense = L1pmOutputDense(
             n_taus=self.n_taus,
         )
 

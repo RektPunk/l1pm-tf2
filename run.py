@@ -3,7 +3,7 @@ import numpy as np
 from l1pm import (
     generate_example,
     DataTransformer,
-    l1pm,
+    L1pm,
 )
 
 # Examples setting
@@ -25,11 +25,11 @@ data_transformer = DataTransformer(
 
 x_train_transform, y_train_transform, taus_transform = data_transformer()
 
-l1pm_module = l1pm(
+l1pm_regressor = L1pm(
     out_features=OUT_FEATURES,
     dense_features=DENSE_FEATURES,
     activation=tf.nn.sigmoid,
     n_taus=len(taus),
 )
 
-y_hat = l1pm_module(x_train)
+y_hat = l1pm_regressor(x_train)
