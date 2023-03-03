@@ -12,7 +12,7 @@ def train_step(
     optimizer: tf.keras.optimizers,
 ):
     with tf.GradientTape(persistent=True) as tape:
-        predicted = model(inputs, tau)
+        predicted = model(inputs)
         loss = loss_func(output, predicted)
 
     grad = tape.gradient(loss, model.weights)
