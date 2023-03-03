@@ -17,7 +17,7 @@ class L1pmOutputDense(tf.keras.layers.Layer):
     def __init__(
         self,
         n_taus: int,
-        kernel_regularizer: tf.keras.regularizers.Regularizer = None,
+        kernel_regularizer: tf.keras.regularizers.Regularizer = None,  # TODO
         **kwargs,
     ):
         super(L1pmOutputDense, self).__init__(**kwargs)

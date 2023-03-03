@@ -9,7 +9,7 @@ class L1pmRegularizer(tf.keras.regularizers.Regularizer):
         self.lmbda = lmbda
 
     def __call__(self, w):
-        ### FIXME
+        # TODO
         return self.lmbda
 
     def get_config(self):
